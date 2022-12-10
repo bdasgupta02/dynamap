@@ -1,5 +1,5 @@
-#ifndef DYNA_TABLE_HPP
-#define DYNA_TABLE_HPP
+#ifndef DYNA_SUBTABLE_HPP
+#define DYNA_SUBTABLE_HPP
 
 #include <stdint.h>
 #include <utility>

@@ -1,5 +1,5 @@
-#ifndef DYNA_COMMON_HPP
-#define DYNA_COMMON_HPP
+#ifndef DYNA_THREAD_HPP
+#define DYNA_THREAD_HPP
 
 namespace dyna
 {
