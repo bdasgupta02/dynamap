@@ -152,6 +152,15 @@ namespace dyna
 
     inline bool empty() { return !occupied; }
     inline size_t size() { return occupied; }
+    inline size_t max_size() { return capacity; }
+
+    size_t max_size_deep() {
+      size_t result = 0;
+      for (int i = 0; i < capacity; i++)
+        result += subtables[i].max_size();
+
+      return result;
+    }
   };
 
 }

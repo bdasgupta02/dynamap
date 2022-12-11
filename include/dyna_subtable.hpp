@@ -239,6 +239,8 @@ namespace dyna
 
     inline iterator<K, V, H> begin() { return head; }
     inline iterator<K, V, H> end() { return tail->next_bucket; }
+    inline size_t size() { return occupied; }
+    inline size_t max_size() { return capacity; }
   };
 
 }
