@@ -115,3 +115,10 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
     </tr>
   </tbody>
 </table>
+
+## Performance
+Benchmarking in progress
+
+## Future additions
+- Support for ranged loops
+- Compiler optimizations
