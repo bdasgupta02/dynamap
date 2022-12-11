@@ -3,6 +3,7 @@
 ## Usage
 ### Default example
 ```cpp
+// <key, value>
 dyna::map<int, int> hashmap;
 
 hashmap.set(2, 502);
