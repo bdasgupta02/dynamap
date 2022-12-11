@@ -1,4 +1,5 @@
 # Dynamap: A memory-efficient and thread-safe hashmap
+This hashmap implementation dynamically resizes its capacity on a fine-grained level, and provides thread-safety to all operations.
 
 ## Usage
 ### Default example
@@ -32,7 +33,10 @@ hashmap.set(2, 502);
 int value = hashmap[2];
 ```
 
-## Member Functions
+## Underlying structure
+![Underlying data structure](https://drive.google.com/uc?export=download&id=1G9dm5lTyADPL_TsKM0WTz4J0XNE0LTWv)
+
+## Member functions
 #### Constructors
 <table>
   <tbody>

@@ -22,7 +22,7 @@ namespace dyna
     iterator<K, V, H> head;
     iterator<K, V, H> tail;
 
-    std::shared_mutex *sub_mutexes;
+    mutable std::shared_mutex *sub_mutexes;
 
     size_t capacity;
     size_t occupied;
