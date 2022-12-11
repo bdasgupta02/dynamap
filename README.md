@@ -13,7 +13,7 @@ int value = hashmap[2];
 
 ### Custom hash function
 ```cpp
-// hash function type
+// hash function type, with default set to std::hash
 dyna::map<ObjectType, int, Hasher> hashmap;
 
 hashmap.set(obj, 502);
@@ -23,7 +23,7 @@ int value = hashmap[obj];
 
 ### Thread safety
 ```cpp
-// either thread::safe or thread::unsafe
+// either thread::safe or thread::unsafe, with default set to safe
 dyna::map<int, int, std::hash, dyna::thread::unsafe> hashmap; 
 
 hashmap.set(2, 502);
