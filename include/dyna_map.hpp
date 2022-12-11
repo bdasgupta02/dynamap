@@ -33,6 +33,10 @@ namespace dyna
     {
       size_t hash_val = hash_func<K, H>(key);
       size_t i = hash_idx(hash_val);
+      std::shared_lock lock{sub_mutexes[i], std::defer_lock};
+      if (T == thread::safe)
+        lock.lock();
+      
       subtable<K, V, H, T> *table = subtables[i];
       return table->lookup(hash_val);
     }
