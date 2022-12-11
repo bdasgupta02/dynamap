@@ -18,14 +18,12 @@ namespace dyna
   template <typename K, typename V, typename H, thread T>
   class subtable
   {
-    using iterator = iterator<K, V, H>;
-
     static const uint16_t LOAD_FACTOR = 80;
     static const size_t INIT_SIZE = 8;
 
     node<K, V, H> **nodes;
-    iterator head;
-    iterator tail;
+    iterator<K, V, H> head;
+    iterator<K, V, H> tail;
 
     mutable std::mutex ext_mutex;
     mutable std::condition_variable ext_cv;
@@ -83,6 +81,7 @@ namespace dyna
     }
 
   public:
+    using iterator = iterator<K, V, H>;
 
     subtable()
     {

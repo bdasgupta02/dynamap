@@ -16,13 +16,11 @@ namespace dyna
   template <typename K, typename V, typename H = std::hash<K>, thread T = thread::safe>
   class map
   {
-    using iterator = iterator<K, V, H>;
-
     static const size_t DEFAULT_MAP_SIZE = 256;
 
     subtable<K, V, H, T> *subtables;
-    iterator head;
-    iterator tail;
+    iterator<K, V, H> head;
+    iterator<K, V, H> tail;
 
     mutable std::shared_mutex *sub_mutexes;
 
@@ -31,7 +29,7 @@ namespace dyna
 
     inline size_t hash_idx(size_t &hash_val) { return hash_val % capacity; }
 
-    std::pair<bool, iterator> lookup(K &key)
+    std::pair<bool, iterator<K, V, H>> lookup(K &key)
     {
       size_t hash_val = hash_func<K, H>(key);
       size_t i = hash_idx(hash_val);
@@ -40,6 +38,8 @@ namespace dyna
     }
 
   public:
+    using iterator = iterator<K, V, H>;
+
     map()
     {
       subtables = new subtable<K, V, H, T>[DEFAULT_MAP_SIZE];
