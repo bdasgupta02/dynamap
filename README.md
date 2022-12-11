@@ -35,6 +35,7 @@ int value = hashmap[2];
 
 ## Underlying structure
 ![Underlying data structure](https://drive.google.com/uc?export=download&id=1G9dm5lTyADPL_TsKM0WTz4J0XNE0LTWv)
+Data buckets have a linked list implementation due to the fact that sub-tables will be automtically resized to result in a more sparse distribution.
 
 ## Member functions
 #### Constructors
