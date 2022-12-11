@@ -16,11 +16,13 @@ namespace dyna
   template <typename K, typename V, typename H = std::hash<K>, thread T = thread::safe>
   class map
   {
+    using iterator = iterator<K, V, H>;
+
     static const size_t DEFAULT_MAP_SIZE = 256;
 
     subtable<K, V, H, T> *subtables;
-    iterator<K, V, H> head;
-    iterator<K, V, H> tail;
+    iterator head;
+    iterator tail;
 
     mutable std::shared_mutex *sub_mutexes;
 
@@ -29,7 +31,7 @@ namespace dyna
 
     inline size_t hash_idx(size_t &hash_val) { return hash_val % capacity; }
 
-    std::pair<bool, iterator<K, V, H>> lookup(K &key)
+    std::pair<bool, iterator> lookup(K &key)
     {
       size_t hash_val = hash_func<K, H>(key);
       size_t i = hash_idx(hash_val);
@@ -65,12 +67,12 @@ namespace dyna
       tail = nullptr;
     }
 
-    inline iterator<K, V, H> begin() { return head; }
-    inline iterator<K, V, H> end() { return tail->next; }
+    inline iterator begin() { return head; }
+    inline iterator end() { return tail->next; }
 
-    iterator<K, V, H> find(K key)
+    iterator find(K key)
     {
-      std::pair<bool, iterator<K, V, H>> result = lookup(key);
+      std::pair<bool, iterator> result = lookup(key);
       if (!result.first)
         return end();
 
@@ -125,7 +127,7 @@ namespace dyna
 
       subtable<K, V, H, T> &table = subtables[i];
 
-      std::pair<bool, iterator<K, V, H>> sub_erase = table->erase(hash_val);
+      std::pair<bool, iterator> sub_erase = table->erase(hash_val);
       if (!sub_erase.first)
         return false;
 
@@ -146,7 +148,7 @@ namespace dyna
 
     bool exists(K key)
     {
-      std::pair<bool, iterator<K, V, H>> result = lookup(key);
+      std::pair<bool, iterator> result = lookup(key);
       return result.first;
     }
 

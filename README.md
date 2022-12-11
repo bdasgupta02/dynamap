@@ -117,8 +117,13 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
 </table>
 
 ## Performance
-Benchmarking in progress
+- In progress
 
-## Future additions
-- Support for ranged loops
+## Assumptions
+- Value type has zero argument constructor
+
+## Incoming additions
+- Support for ranged loops through better iterators
 - Compiler optimizations
+- More functionality (including `clear()`, optimization settings)
+- Reduction of overhead further
