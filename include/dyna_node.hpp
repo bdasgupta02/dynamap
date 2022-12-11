@@ -18,26 +18,33 @@ namespace dyna
   struct node : public std::pair<K *, V *>
   {
     node<K, V, H> *next;
+    node<K, V, H> *prev;
+
     node<K, V, H> *next_bucket;
-    size_t hash;
+    node<K, V, H> *prev_bucket;
+
+    node<K, V, H> *next_subtable;
+    node<K, V, H> *prev_subtable;
+
+    size_t *hash;
 
     node() : std::pair<K *, V *>(nullptr, nullptr)
     {
       next = nullptr;
       next_bucket = nullptr;
-      hash = 0;
+      hash = nullptr;
     }
 
     node(K key, V value) : std::pair<K *, V *>(new K(key), new V(value))
     {
-      hash = hash_func<K, H>(key);
+      hash = new size_t(hash_func<K, H>(key));
       next = nullptr;
       next_bucket = nullptr;
     }
 
     node(K key, V value, size_t hash_val) : std::pair<K *, V *>(new K(key), new V(value))
     {
-      hash = hash_val;
+      hash = new size_t(hash_val);
       next = nullptr;
       next_bucket = nullptr;
     }
@@ -48,10 +55,15 @@ namespace dyna
       next_bucket = nullptr;
     }
 
-    bool operator==(node<K, V, H> &other)
+    inline bool operator==(node<K, V, H> &other)
     {
       return this->first == other.first &&
              this->second == other.second;
+    }
+
+    inline bool empty()
+    {
+      return !this->first && !this->second;
     }
   };
 
