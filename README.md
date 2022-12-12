@@ -1,4 +1,4 @@
-# Dynamap: A memory-efficient and thread-safe hashmap
+# Dynamap: A dynamically resized and thread-safe hashmap
 This hashmap implementation dynamically resizes its capacity on a fine-grained level, and provides thread-safety to all operations.
 
 ## Usage
