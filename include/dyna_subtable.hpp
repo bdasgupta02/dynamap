@@ -22,8 +22,8 @@ namespace dyna
     static const size_t INIT_SIZE = 8;
 
     node<K, V, H> **nodes;
-    iterator<K, V, H> head;
-    iterator<K, V, H> tail;
+    node<K, V, H> *head;
+    node<K, V, H> *tail;
 
     mutable std::mutex ext_mutex;
     mutable std::condition_variable ext_cv;
@@ -51,10 +51,10 @@ namespace dyna
       capacity *= 2;
       occupied = 0;
 
-      nodes = new iterator[capacity];
+      nodes = new node<K, V, H> *[capacity];
       mutexes = new std::shared_mutex[capacity];
 
-      iterator tmp = head;
+      node<K, V, H> *tmp = head;
       head = nullptr;
       tail = nullptr;
 
@@ -85,7 +85,7 @@ namespace dyna
 
     subtable()
     {
-      nodes = new iterator[INIT_SIZE];
+      nodes = new node<K, V, H> *[INIT_SIZE];
       mutexes = new std::shared_mutex[INIT_SIZE];
       head = nullptr;
       tail = nullptr;
@@ -100,7 +100,7 @@ namespace dyna
       tail = nullptr;
     }
 
-    std::pair<bool, iterator> lookup(size_t &hash_val)
+    std::pair<bool, node<K, V, H> *> lookup(size_t &hash_val)
     {
       size_t i = hash_idx(hash_val);
       std::shared_lock lock{mutexes[i], std::defer_lock};
@@ -108,7 +108,7 @@ namespace dyna
       if (T == thread::safe)
         lock.lock();
 
-      iterator node = nodes[i];
+      node<K, V, H> *node = nodes[i];
 
       while (node)
       {
@@ -125,7 +125,7 @@ namespace dyna
     {
       ext_wait();
 
-      std::pair<bool, iterator> result = lookup(hash_val);
+      std::pair<bool, node<K, V, H> *> result = lookup(hash_val);
       if (result.first)
         return *result.second->second;
       else
@@ -142,7 +142,7 @@ namespace dyna
       if (T == thread::safe && wait)
         ext_wait();
 
-      std::pair<bool, iterator> result = lookup(*new_node->hash);
+      std::pair<bool, node<K, V, H> *> result = lookup(*new_node->hash);
       size_t i = hash_idx(*new_node->hash);
       std::unique_lock lock{mutexes[i], std::defer_lock};
 
@@ -155,7 +155,7 @@ namespace dyna
         return;
       }
 
-      iterator tmp = nodes[i];
+      node<K, V, H> *tmp = nodes[i];
 
       if (!tmp)
         nodes[i] = new_node;
@@ -196,7 +196,7 @@ namespace dyna
       }
     }
 
-    std::pair<bool, iterator> erase(size_t &hash_val)
+    std::pair<bool, node<K, V, H> *> erase(size_t &hash_val)
     {
       if (T == thread::safe)
         ext_wait();
@@ -207,7 +207,7 @@ namespace dyna
       if (T == thread::safe)
         lock.lock();
 
-      std::pair<bool, iterator> result = lookup(hash_val);
+      std::pair<bool, node<K, V, H> *> result = lookup(hash_val);
       if (!result.first)
         return result;
 
@@ -238,8 +238,8 @@ namespace dyna
       return result.first;
     }
 
-    inline iterator begin() { return head; }
-    inline iterator end() { return tail->next_bucket; }
+    inline iterator begin() { return iterator(head); }
+    inline iterator end() { return iterator(tail->next_bucket); }
     inline size_t size() { return occupied; }
     inline size_t max_size() { return capacity; }
   };

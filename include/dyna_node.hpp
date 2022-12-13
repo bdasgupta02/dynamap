@@ -67,8 +67,82 @@ namespace dyna
     }
   };
 
-  template <typename K, typename V, typename H>
-  using iterator = node<K, V, H> *;
+  template <typename K, typename V, typename H> 
+  class iterator {
+    node<K, V, H> *data;
+
+  public:
+    iterator() {}
+
+    iterator(node<K, V, H> *data): data(data) {}
+
+    node<K, V, H> *operator->()
+    {
+      return data;
+    }
+
+    iterator<K, V, H> &operator++()
+    {
+      if (this->data)
+        this->data = this->data->next;
+
+      return *this;
+    }
+
+    iterator<K, V, H> operator++(int)
+    {
+      if (this->data)
+        this->data = this->data->next;
+
+      return *this;
+    }
+
+    void operator--()
+    {
+      if (!this->data)
+        return;
+      
+      this->data = this->data->prev;
+    }
+
+    void operator+(size_t add)
+    {
+      for (int i = 0; i < add; i++)
+      {
+        if (!this->data && !this->data->next)
+        {
+          this->data = nullptr;
+          return;
+        }
+        this->data = this->data->next;
+      }
+    }
+
+    void operator-(size_t neg)
+    {
+      for (int i = 0; i < neg; i++)
+      {
+        if (!this->data && !this->data->prev)
+        {
+          this->data = nullptr;
+          return;
+        }
+        this->data = this->data->prev;
+      }
+    }
+
+    bool operator==(iterator<K, V, H> &other)
+    {
+      return this->data->hash == other.data->hash;
+    }
+
+    bool operator!=(iterator<K, V, H> &other)
+    {
+      return this->data->hash != other.data->hash;
+    }
+
+    iterator<K, V, H> &operator*() { return *this; }
+  };
 }
 
 #endif
