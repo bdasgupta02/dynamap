@@ -7,8 +7,6 @@
 #include <mutex>
 #include <condition_variable>
 
-#include <iostream>
-
 #include "dyna_thread.hpp"
 #include "dyna_node.hpp"
 

@@ -72,8 +72,7 @@ namespace dyna
     node<K, V, H> *data;
 
   public:
-    iterator() {}
-
+    iterator(): data(nullptr) {}
     iterator(node<K, V, H> *data): data(data) {}
 
     node<K, V, H> *operator->()
@@ -133,11 +132,23 @@ namespace dyna
 
     bool operator==(iterator<K, V, H> &other)
     {
+      if (!this->data && !other.data)
+        return true;
+      
+      if (!this->data || !other.data)
+        return false;
+
       return this->data->hash == other.data->hash;
     }
 
     bool operator!=(iterator<K, V, H> &other)
     {
+      if (!this->data && !other.data)
+        return false;
+      
+      if (!this->data || !other.data)
+        return true;
+
       return this->data->hash != other.data->hash;
     }
 
