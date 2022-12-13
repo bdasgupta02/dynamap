@@ -88,7 +88,7 @@ namespace dyna
       return *this;
     }
 
-    iterator<K, V, H> operator++(int)
+    iterator<K, V, H> &operator++(int)
     {
       if (this->data)
         this->data = this->data->next;
