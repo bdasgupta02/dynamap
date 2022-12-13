@@ -37,8 +37,8 @@ namespace dyna
       if (T == thread::safe)
         lock.lock();
       
-      subtable<K, V, H, T> *table = subtables[i];
-      return table->lookup(hash_val);
+      subtable<K, V, H, T> &table = subtables[i];
+      return table.lookup(hash_val);
     }
 
   public:
@@ -131,7 +131,7 @@ namespace dyna
 
       subtable<K, V, H, T> &table = subtables[i];
 
-      std::pair<bool, node<K, V, H> *> sub_erase = table->erase(hash_val);
+      std::pair<bool, node<K, V, H> *> sub_erase = table.erase(hash_val);
       if (!sub_erase.first)
         return false;
 
@@ -142,10 +142,10 @@ namespace dyna
         tail = sub_erase.second->prev;
 
       if (sub_erase.second->next)
-        sub_erase.second->next->prev = sub_erase->prev;
+        sub_erase.second->next->prev = sub_erase.second->prev;
 
       if (sub_erase.second->prev)
-        sub_erase.second->prev->next = sub_erase->next;
+        sub_erase.second->prev->next = sub_erase.second->next;
 
       return true;
     }

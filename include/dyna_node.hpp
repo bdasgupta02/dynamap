@@ -61,10 +61,9 @@ namespace dyna
              this->second == other.second;
     }
 
-    inline bool empty()
-    {
-      return !this->first && !this->second;
-    }
+    inline bool empty() { return !this->first && !this->second; }
+    inline K &key() { return *this->first; }
+    inline K &value() { return *this->second; }
   };
 
   template <typename K, typename V, typename H> 
@@ -80,7 +79,7 @@ namespace dyna
       return data;
     }
 
-    iterator<K, V, H> &operator++()
+    iterator &operator++()
     {
       if (this->data)
         this->data = this->data->next;
@@ -88,7 +87,7 @@ namespace dyna
       return *this;
     }
 
-    iterator<K, V, H> &operator++(int)
+    iterator &operator++(int)
     {
       if (this->data)
         this->data = this->data->next;
@@ -96,15 +95,15 @@ namespace dyna
       return *this;
     }
 
-    void operator--()
+    iterator &operator--()
     {
-      if (!this->data)
-        return;
-      
-      this->data = this->data->prev;
+      if (this->data)
+        this->data = this->data->prev;
+
+      return *this;
     }
 
-    void operator+(size_t add)
+    void operator+=(size_t add)
     {
       for (int i = 0; i < add; i++)
       {
@@ -117,7 +116,7 @@ namespace dyna
       }
     }
 
-    void operator-(size_t neg)
+    void operator-=(size_t neg)
     {
       for (int i = 0; i < neg; i++)
       {
@@ -130,7 +129,7 @@ namespace dyna
       }
     }
 
-    bool operator==(iterator<K, V, H> &other)
+    bool operator==(iterator &other)
     {
       if (!this->data && !other.data)
         return true;
@@ -141,7 +140,7 @@ namespace dyna
       return this->data->hash == other.data->hash;
     }
 
-    bool operator!=(iterator<K, V, H> &other)
+    bool operator!=(iterator &other)
     {
       if (!this->data && !other.data)
         return false;
@@ -152,7 +151,7 @@ namespace dyna
       return this->data->hash != other.data->hash;
     }
 
-    iterator<K, V, H> &operator*() { return *this; }
+    iterator &operator*() { return *this; }
   };
 }
 

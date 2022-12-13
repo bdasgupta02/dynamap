@@ -199,16 +199,16 @@ namespace dyna
       if (T == thread::safe)
         ext_wait();
 
+      std::pair<bool, node<K, V, H> *> result = lookup(hash_val);
+      if (!result.first)
+        return result;
+
       size_t i = hash_idx(hash_val);
       std::unique_lock lock{mutexes[i], std::defer_lock};
 
       if (T == thread::safe)
         lock.lock();
-
-      std::pair<bool, node<K, V, H> *> result = lookup(hash_val);
-      if (!result.first)
-        return result;
-
+      
       if (!result.second->prev_bucket && !result.second->next_bucket)
       {
         nodes[i] = nullptr;
