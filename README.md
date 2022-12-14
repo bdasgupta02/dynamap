@@ -116,6 +116,19 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
   </tbody>
 </table>
 
+## Iterator usage
+This implementation includes a FIFO-based ordering using iterators. This also works with ranged loops. Example usage:
+```cpp
+map.set(0, 0);
+map.set(1, 1);
+
+auto it = map.begin();
+++it;
+
+int key = it->key(); // 1
+int value = it->value(); // 1
+```
+
 ## Assumptions
 - Value type has zero argument constructor
 

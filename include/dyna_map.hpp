@@ -6,6 +6,7 @@
 #include <utility>
 #include <shared_mutex>
 #include <mutex>
+#include "../tests/benchmarks/timer.hpp"
 
 #include "dyna_subtable.hpp"
 #include "dyna_thread.hpp"
