@@ -116,15 +116,6 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
   </tbody>
 </table>
 
-## Performance
-Benchmarked with a high resolution clock 
-Specs: Apple MacBook Pro M1 Pro (ARM)
-```
-Type          Time(ns)
-       
-```
-- In progress
-
 ## Iterator usage
 This implementation includes a FIFO-based ordering using iterators. This also works with ranged loops. Example usage:
 ```cpp
@@ -141,8 +132,9 @@ int value = it->value(); // 1
 ## Assumptions
 - Value type has zero argument constructor
 
-## Incoming additions
+## Incoming changes
 - Support for ranged loops through better iterators **[DONE]**
 - Compiler optimizations
 - More functionality (including `clear()`, optimization settings)
 - Reduction of overhead further
+- Known issue with deadlock with mass additions
