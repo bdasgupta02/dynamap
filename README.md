@@ -116,9 +116,6 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
   </tbody>
 </table>
 
-## Performance
-- In progress
-
 ## Assumptions
 - Value type has zero argument constructor
 
