@@ -116,6 +116,15 @@ Data buckets have a linked list implementation due to the fact that sub-tables w
   </tbody>
 </table>
 
+## Performance
+Benchmarked with a high resolution clock 
+Specs: Apple MacBook Pro M1 Pro (ARM)
+```
+Type          Time(ns)
+       
+```
+- In progress
+
 ## Iterator usage
 This implementation includes a FIFO-based ordering using iterators. This also works with ranged loops. Example usage:
 ```cpp

@@ -83,7 +83,7 @@ namespace dyna
 
     subtable()
     {
-      nodes = new node<K, V, H> *[INIT_SIZE];
+      nodes = new node<K, V, H> *[INIT_SIZE]();
       mutexes = new std::shared_mutex[INIT_SIZE];
       head = nullptr;
       tail = nullptr;
@@ -108,7 +108,7 @@ namespace dyna
 
       node<K, V, H> *node = nodes[i];
 
-      while (node)
+      while (node && node->hash)
       {
         if (*node->hash == hash_val)
           return std::make_pair(true, node);
