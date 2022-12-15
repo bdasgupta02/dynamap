@@ -32,6 +32,9 @@ namespace dyna
     {
       next = nullptr;
       next_bucket = nullptr;
+      prev_bucket = nullptr;
+      next_subtable = nullptr;
+      prev_subtable = nullptr;
       hash = nullptr;
     }
 
@@ -40,6 +43,9 @@ namespace dyna
       hash = new size_t(hash_func<K, H>(key));
       next = nullptr;
       next_bucket = nullptr;
+      prev_bucket = nullptr;
+      next_subtable = nullptr;
+      prev_subtable = nullptr;
     }
 
     node(K key, V value, size_t hash_val) : std::pair<K *, V *>(new K(key), new V(value))
@@ -47,12 +53,9 @@ namespace dyna
       hash = new size_t(hash_val);
       next = nullptr;
       next_bucket = nullptr;
-    }
-
-    ~node()
-    {
-      next = nullptr;
-      next_bucket = nullptr;
+      prev_bucket = nullptr;
+      next_subtable = nullptr;
+      prev_subtable = nullptr;
     }
 
     inline bool operator==(node<K, V, H> &other)

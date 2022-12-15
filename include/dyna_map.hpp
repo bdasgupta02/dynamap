@@ -65,13 +65,6 @@ namespace dyna
       occupied = 0;
     }
 
-    ~map()
-    {
-      delete[] subtables;
-      head = nullptr;
-      tail = nullptr;
-    }
-
     inline iterator begin() { return iterator(head); }
     inline iterator end() { return iterator(tail->next); }
 
@@ -120,6 +113,7 @@ namespace dyna
 
       subtable<K, V, H, T> &table = subtables[i];
       table.set(new_node);
+      delete new_node;
     }
 
     bool erase(K key)

@@ -91,13 +91,6 @@ namespace dyna
       occupied = 0;
     }
 
-    ~subtable()
-    {
-      delete[] nodes;
-      head = nullptr;
-      tail = nullptr;
-    }
-
     std::pair<bool, node<K, V, H> *> lookup(size_t &hash_val)
     {
       size_t i = hash_idx(hash_val);
@@ -131,6 +124,7 @@ namespace dyna
         V def_val;
         node<K, V, H> *new_node = new node<K, V, H>(key, def_val, hash_val);
         set(new_node);
+        delete new_node;
         return get(hash_val, key);
       }
     }
@@ -194,7 +188,7 @@ namespace dyna
       }
     }
 
-    std::pair<bool, node<K, V, H> *> erase(size_t &hash_val)
+    std::pair<bool, node<K, V, H> *> &erase(size_t &hash_val)
     {
       if (T == thread::safe)
         ext_wait();
@@ -230,7 +224,7 @@ namespace dyna
       return result;
     }
 
-    bool exists(size_t &hash_val)
+    bool &exists(size_t &hash_val)
     {
       std::pair<bool, node<K, V, H> *> result = lookup(hash_val);
       return result.first;
